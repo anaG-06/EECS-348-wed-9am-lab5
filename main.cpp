@@ -28,9 +28,31 @@ int print_matrix(vector<vector<int>> m)
     return 0;
 }
 
-int add_matrix()
+// adds two matricies, matricies are passed by value (copy), assumes matricies are nxn, returns sum matrix
+vector<vector<int>> add_matrix(vector<vector<int>> matA,vector<vector<int>> matB)
 {
-    return 0;
+    vector<vector<int>> result; //output
+    vector<int> row;
+    int dim = matA.size();//matrix dimensions
+    int matA_num;
+    int matB_num;
+
+    for (int i = 0; i < dim; i++)
+        {
+            for (int j = 0; j < dim; j++)
+            {   
+                matA_num = matA.at(i).at(j); //element ij in matrixA
+                matB_num = matB.at(i).at(j); //element ij in matrixB
+
+                row.push_back(matA_num + matB_num); //sum and ad to temp row
+            }
+
+            result.push_back(row);
+            row.clear(); // clear row for reuse
+        }
+
+
+    return result;//add sum to element ij in result matrix SOMETHING WRONG WITH THIS
 }
 
 int main()
@@ -60,7 +82,7 @@ int main()
     //matrix1 and matrix2 implemented as 2d vectors
     vector <vector<int>> matrix1;
     vector <vector<int>> matrix2;
-    
+    cout << "\n";
     vector <int> row;// used to create rows for matricies
     string element; //holds row element before converting to int
     int elementINT; //holds row element after converting to int
@@ -119,10 +141,18 @@ int main()
         row.clear(); //clears row for reuse
     } //END FOR LOOP
 
+    //printing matricies
     cout << "Matrix A: \n";
     print_matrix(matrix1);
-    cout << "Matrix B: \n";
+    cout << "\nMatrix B: \n";
     print_matrix(matrix2);
+
+    //adding matricies
+    vector<vector<int>> result = add_matrix(matrix1,matrix2);
+    cout << "\nA + B:\n";
+    print_matrix(result);
+
+    //multiply matricies
 
     return 0;
 }
