@@ -12,8 +12,19 @@ Description: matrix operations, reading from a file
 #include <vector>
 using namespace std;
 
-int print_matrix()
+// prints matrix using nested for loop. matrix is passed by value (uses a copy), assumes matrix is n x n
+int print_matrix(vector<vector<int>> m)
 {
+    int dim = m.size(); //matrix dimensions
+    for (int i = 0; i < dim; i++)
+    {
+        for (int j = 0; j < dim; j++)
+        {   
+            cout << m.at(i).at(j) << "  ";
+        }
+        cout << "\n";
+    }
+
     return 0;
 }
 
@@ -61,7 +72,7 @@ int main()
     {
         string temp = fileRaw.at(i).c_str();
         temp.insert(temp.begin(),'_'); //makes it so that there is one unwanted character in front of each wanted number, makes it easier to clean/get desired part of string
-        cout << temp << "\n"; //test
+        // cout << temp << "\n"; //test
 
         //create row
         for (int j = 0; j < temp.length()-2; j = j+3) //iterates by 3 in order to skip spaces, stops 2 chars before end to avoid out of bounds
@@ -106,7 +117,12 @@ int main()
         }
         
         row.clear(); //clears row for reuse
-    }
+    } //END FOR LOOP
+
+    cout << "Matrix A: \n";
+    print_matrix(matrix1);
+    cout << "Matrix B: \n";
+    print_matrix(matrix2);
 
     return 0;
 }
