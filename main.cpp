@@ -90,9 +90,22 @@ vector<vector<int>> mult_matrix(vector<vector<int>> matA,vector<vector<int>> mat
     return result;
 }
 
-int sum_diagonal(vector<vector<int>> m)
+//sums the primary and secondary diagonals of a matrix, nxn, return vector containing primary and secondary
+vector<int> sum_diagonal(vector<vector<int>> m)
 {
-    return 0;
+    vector<int> output; //holds main and secondary diagonal
+    int main =0 ; //main diagonal
+    int secondary=0; // secondary diagonal
+    int dim = m.size(); //dimensions
+
+    for (int i = 0; i < dim; i++)
+    {
+        main += m.at(i).at(i);
+        secondary += m.at(i).at(dim-1-i);
+    }
+    output.push_back(main);
+    output.push_back(secondary);
+    return output;
 }
 
 int main()
@@ -196,6 +209,12 @@ int main()
     vector<vector<int>> product = mult_matrix(matrix1,matrix2);
     cout << "\nA * B:\n";
     print_matrix(product);
+
+    //add diagonals
+    vector<int> diags = sum_diagonal(matrix1);
+    cout << "\nDiagonal sums for Matrix A:\n";
+    cout << "Main diagonal sum: " << diags.at(0)<< "\n";
+    cout << "Main diagonal sum: " << diags.at(1)<< "\n";
 
     return 0;
 }
