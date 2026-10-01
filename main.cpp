@@ -2,7 +2,7 @@
 Date: 9.30.26
 Author: Ana Gonzalez Yuil
 Lab: 5
-Sources:N/A
+Sources:https://www.geeksforgeeks.org/python/python-program-multiply-two-matrices/, used for inspiration for matrix mult
 Description: matrix operations, reading from a file
 */
 
@@ -52,7 +52,47 @@ vector<vector<int>> add_matrix(vector<vector<int>> matA,vector<vector<int>> matB
         }
 
 
-    return result;//add sum to element ij in result matrix SOMETHING WRONG WITH THIS
+    return result;
+}
+
+// multiplies two matricies, matrix is passed by value, assumes nxn, returns product matrix
+vector<vector<int>> mult_matrix(vector<vector<int>> matA,vector<vector<int>> matB)
+{
+    vector<vector<int>> result;
+    vector<int> row;
+    int element = 0;
+
+    int dim = matA.size();
+    int matA_num;
+    int matB_num;
+    int temp_num;
+
+    for (int i = 0; i < dim; i++)
+    {
+        for (int j = 0; j < dim; j++)
+        {
+            for (int k = 0; k < dim; k++)
+            {
+                matA_num = matA.at(i).at(k);
+                matB_num = matB.at(k).at(j);
+
+                temp_num = matA_num * matB_num;
+                element += temp_num;
+
+            }
+            row.push_back(element);
+            element = 0;
+        }
+        result.push_back(row);
+        row.clear();
+    }
+
+    return result;
+}
+
+int sum_diagonal(vector<vector<int>> m)
+{
+    return 0;
 }
 
 int main()
@@ -76,6 +116,10 @@ int main()
         }
         myFile.close();
     }
+    else
+    {
+        cout << "unable to open file.";
+    }
     
     int dim = stoi(fileRaw[0]);// initialize matrix dimensions
     
@@ -88,19 +132,15 @@ int main()
     int elementINT; //holds row element after converting to int
 
     //create matrix1 and matrix2
-    // i starts at 1 bc line 0 has dim, ends at 
-
     for (int i = 1; i <= dim * 2; i++)
     {
-        string temp = fileRaw.at(i).c_str();
+        string temp = fileRaw.at(i).c_str(); //hold row of text
         temp.insert(temp.begin(),'_'); //makes it so that there is one unwanted character in front of each wanted number, makes it easier to clean/get desired part of string
         // cout << temp << "\n"; //test
 
         //create row
         for (int j = 0; j < temp.length()-2; j = j+3) //iterates by 3 in order to skip spaces, stops 2 chars before end to avoid out of bounds
         {
-            // string element; //holds row element before converting to int
-
             if (temp.at(j+1) == '0') //if number only has single digit, dont take zero in front
             {
                 element += temp.at(j+2);
@@ -148,11 +188,14 @@ int main()
     print_matrix(matrix2);
 
     //adding matricies
-    vector<vector<int>> result = add_matrix(matrix1,matrix2);
+    vector<vector<int>> sum = add_matrix(matrix1,matrix2);
     cout << "\nA + B:\n";
-    print_matrix(result);
+    print_matrix(sum);
 
     //multiply matricies
+    vector<vector<int>> product = mult_matrix(matrix1,matrix2);
+    cout << "\nA * B:\n";
+    print_matrix(product);
 
     return 0;
 }
