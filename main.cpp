@@ -138,7 +138,7 @@ bool swap_cols(vector<vector<int>> &m, int colA, int colB)
 
     if (colA < 0 || colA > dim || colB < 0 || colB > dim)
     {
-        cout << "Selected columns(s) out of bounds.\n";
+        cout << "Selected column(s) out of bounds.\n";
         return false;
     }
     else{
@@ -156,8 +156,20 @@ bool swap_cols(vector<vector<int>> &m, int colA, int colB)
 }
 
 //updates a matrix element, matrix is passed by reference, returns bool to determine if matrix is printed
-void update_element(vector<vector<int>> &m, int row, int col)
+bool update_element(vector<vector<int>> &m, int row, int col, int value)
 {
+    int dim = m.size() -1;
+    row --;
+    col--;
+    if (row < 0 || row > dim || col < 0 || col > dim)
+    {
+        cout << "Selected coordinates out of bounds.\n";
+        return false;
+    }
+    else{
+        m.at(row).at(col) = value;
+        return true;
+    }
 
 }
 
@@ -199,6 +211,7 @@ int main()
     int elementINT; //holds row element after converting to int
 
     //create matrix1 and matrix2
+    // (probably doesnt work with negative values)
     for (int i = 1; i <= dim * 2; i++)
     {
         string temp = fileRaw.at(i).c_str(); //hold row of text
@@ -301,7 +314,25 @@ int main()
         print_matrix(matrix1);
     }
 
-    //update element
+    //update element----------------
+    int r; //row
+    int c; //col
+    int user_val;
+
+    cout << "Enter a row (starting at 1): ";
+    cin >> r;
+    cout << "Enter a column (starting at 1): ";
+    cin >> c;
+    cout << "Enter a value: ";
+    cin >> user_val;
+
+    if (update_element(matrix1,r,c,user_val) == 1)
+    {
+        cout << "Matrix updated at ["<<r<<","<<c<<"]\n";
+        print_matrix(matrix1);
+    }
+    
+
 
     return 0;
 }
