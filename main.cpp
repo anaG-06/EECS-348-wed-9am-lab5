@@ -108,6 +108,60 @@ vector<int> sum_diagonal(vector<vector<int>> m)
     return output;
 }
 
+//swaps two rows of a matrix, matrix is passed by reference, returns bool to determine if matrix is printed
+bool swap_rows(vector<vector<int>> &m, int rowA, int rowB)
+{
+    int dim = m.size() - 1; //-1 for indexing 
+    rowA --;
+    rowB --;
+
+    if (rowA < 0 || rowA > dim || rowB < 0 || rowB > dim)
+    {
+        cout << "Selected row(s) out of bounds.\n";
+        return false;
+    }
+    else{
+        m.at(rowA).swap(m.at(rowB));
+        return true;
+    }
+}
+
+//swaps two columns of matrix, matrix is passed by reference, returns bool to determine if matrix is printed
+bool swap_cols(vector<vector<int>> &m, int colA, int colB)
+{
+    int tempA = 0; //holds element to be swapped
+    int tempB = 0; //holds element to be swapped
+
+    int dim = m.size() - 1; //-1 for indexing 
+    colA --;
+    colB --;
+
+    if (colA < 0 || colA > dim || colB < 0 || colB > dim)
+    {
+        cout << "Selected columns(s) out of bounds.\n";
+        return false;
+    }
+    else{
+        for (int i = 0; i < dim+1; i++)
+        {
+            tempA = m.at(i).at(colA); //gets elements of colA
+            tempB = m.at(i).at(colB); //gets elements of colB
+
+            m.at(i).at(colA) = tempB;
+            m.at(i).at(colB) = tempA;
+
+        }
+        return true;
+    }
+}
+
+//updates a matrix element, matrix is passed by reference, returns bool to determine if matrix is printed
+void update_element(vector<vector<int>> &m, int row, int col)
+{
+
+}
+
+
 int main()
 {
     vector <string> fileRaw;
@@ -215,6 +269,39 @@ int main()
     cout << "\nDiagonal sums for Matrix A:\n";
     cout << "Main diagonal sum: " << diags.at(0)<< "\n";
     cout << "Main diagonal sum: " << diags.at(1)<< "\n";
+
+    //swap rows------------------------------------
+    int rowa;
+    int rowb;
+
+    cout << "First row to swap (starting at 1): ";
+    cin >> rowa;
+    cout << "Second row to swap (starting at 1): ";
+    cin >> rowb;
+
+    
+    if (swap_rows(matrix1,rowa,rowb) == 1) // if swap_rows is not true, the rows given were out of bounds, and no matrix changes happen
+    {
+        cout << "\nRows " << rowa << " and " << rowb << " swapped:\n";
+        print_matrix(matrix1);
+    }
+
+    //swap cols--------------------------------
+    int cola;
+    int colb;
+
+    cout << "First column to swap (starting at 1): ";
+    cin >> cola;
+    cout << "Second column to swap (starting at 1): ";
+    cin >> colb;
+    
+    if (swap_cols(matrix1,cola,colb) == 1) // if swap_cols is not true, the cols given were out of bounds, and no matrix changes happen
+    {
+        cout << "\nColumns " << cola << " and " << colb << " swapped:\n";
+        print_matrix(matrix1);
+    }
+
+    //update element
 
     return 0;
 }
