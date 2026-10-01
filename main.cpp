@@ -10,6 +10,7 @@ Description: matrix operations, reading from a file
 #include <fstream>
 #include <string>
 #include <vector>
+#include <iomanip>
 using namespace std;
 
 // prints matrix using nested for loop. matrix is passed by value (uses a copy), assumes matrix is n x n
@@ -20,7 +21,7 @@ int print_matrix(vector<vector<int>> m)
     {
         for (int j = 0; j < dim; j++)
         {   
-            cout << m.at(i).at(j) << "  ";
+            cout << setw(4) << m.at(i).at(j) << "  ";
         }
         cout << "\n";
     }
